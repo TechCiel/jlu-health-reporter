@@ -7,6 +7,7 @@ RETRY_INTERVAL = 20
 DEBUG = 0#+1
 
 import re
+from sys import argv
 import json
 from time import time, sleep
 import urllib3
@@ -78,6 +79,10 @@ while True: # main loop
 		error('Unknown error occured, retrying...')
 		sleep(RETRY_INTERVAL)
 		continue
+
+	if len(argv) > 1 and argv[1] == '--once' :
+		info('Success! Exiting...')
+		exit()
 
 	info('Success! Waiting for next run...')
 	tries = 0
