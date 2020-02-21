@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 USERS = [('zhaoyy2119', 'PASSWORD')]
+# USERNAME and USERPASS are deprecated now for multi-user support
+USERNAME = 'zhaoyy2119'
+USERPASS = 'PASSWORD'
 INTERVAL = 86400 
-MAX_RETRY = 3
-RETRY_INTERVAL = 2
+MAX_RETRY = 30
+RETRY_INTERVAL = 20
+TRANSACTION = 'JLDX_BK_XNYQSB' # 'JLDX_YJS_XNYQSB'git
 DEBUG = 0#+1
 
 import re
@@ -17,7 +21,7 @@ from logging import debug, info, warning, error, critical
 logging.basicConfig(level=logging.INFO-10*DEBUG, format='%(asctime)s %(levelname)s %(message)s')
 warning('Started.')
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-tries = 0
+if USERS is None: USERS = [(USERNAME, USERPASS)]
 
 while True: # main loop
 	for USERNAME, USERPASS in USERS:
@@ -37,11 +41,11 @@ while True: # main loop
 				r = s.post('https://ehall.jlu.edu.cn/sso/login',data=postPayload)
 
 				info('Requesting form...')
-				r = s.get('https://ehall.jlu.edu.cn/infoplus/form/JLDX_BK_XNYQSB/start')
+				r = s.get('https://ehall.jlu.edu.cn/infoplus/form/'+TRANSACTION+'/start')
 				csrfToken = re.search('(?<=csrfToken" content=").{32}',r.text)[0]
 				debug('CSRF: '+csrfToken)
 
-				postPayload = {'idc':'JLDX_BK_XNYQSB','csrfToken':csrfToken}
+				postPayload = {'idc':TRANSACTION,'csrfToken':csrfToken}
 				r = s.post('https://ehall.jlu.edu.cn/infoplus/interface/start',data=postPayload)
 				sid = re.search('(?<=form/)\\d*(?=/render)',r.text)[0]
 				debug('Step ID: '+sid)
