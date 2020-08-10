@@ -42,6 +42,10 @@ Crontab 模式：
 ./jlu-health-reporter.py --once
 ```
 
+## 推送功能介绍
+详见：[ForeverOpp/JLUAnnounceBot](https://github.com/ForeverOpp/JLUAnnounceBot#%E7%BB%93%E6%9E%84) 下的3。  
+> 该类可扩展，故设置了一个`__init__(method)`方法用以选择发送方法，支持SMTP邮件发送，ServerChan微信推送，控制台输出和iOS端的软件Bark推送，关于ServerChan的介绍，请移步[ServerChan](http://sc.ftqq.com)，关于Bark的介绍，请移步[Bark](https://github.com/Finb/Bark/) 。
+
 ## 联系
 
 邮箱在源代码里。

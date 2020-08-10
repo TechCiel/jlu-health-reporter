@@ -1,5 +1,15 @@
 #!/usr/bin/env python3
 import json
+import logging
+import re
+from logging import debug, info, warning, error
+from sys import argv
+from time import time, sleep
+
+import requests
+import urllib3
+
+import MessageSender
 
 with open("./students.json", encoding="utf-8") as json_file:
     data = json.load(json_file)
@@ -13,19 +23,14 @@ RETRY_INTERVAL = 20
 TRANSACTION = 'JLDX_BK_XNYQSB'  # 'JLDX_YJS_XNYQSB'git
 DEBUG = 0  # +1
 
-import re
-from sys import argv
-import json
-from time import time, sleep
-import urllib3
-import requests
-import logging
-from logging import debug, info, warning, error, critical
-
 logging.basicConfig(level=logging.INFO - 10 * DEBUG, format='%(asctime)s %(levelname)s %(message)s')
 warning('Started.')
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-if USERS is None: USERS = [{'name':USERNAME, 'passwd': USERPASS}]
+m = MessageSender.MessageSender("bark")
+m.config({"apikey": ""})
+
+if USERS is None:
+    USERS = [{'name': USERNAME, 'passwd': USERPASS}]
 
 while True:  # main loop
     for USERINFO in USERS:
@@ -81,14 +86,23 @@ while True:  # main loop
                     raise Exception('The server returned a non-successful status.')
 
                 info('Success!')
+                if tries is 0:
+                    content = "一次就成功了呢~"
+                else:
+                    content = "试了大概" + str(tries) + "次，不过还是成功了~"
+                msg = {"title": "为%s填报成功！" % USERINFO['name'], "content": content}
+                m.send(msg)
                 break
 
             except Exception as e:
                 warning(e)
                 if tries + 1 == MAX_RETRY:
                     error('Failed too many times! Skipping...')
+                    msg = {"title": "为%s填报失败！" % USERINFO['name'], "content": "重试次数过多！" + e.__str__()}
+                    m.send(msg)
                     break
                 error('Unknown error occured, retrying...')
+                msg = {"title": "为%s填报失败！" % USERINFO['name'], "content": "正在重试，出现异常：" + e.__str__()}
                 sleep(RETRY_INTERVAL)
 
     if len(argv) > 1 and argv[1] == '--once':
