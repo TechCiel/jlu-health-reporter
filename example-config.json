@@ -1,0 +1,19 @@
+{
+	"transacation": "BKSMRDK",
+	"fields": {
+		"fieldZtw": "1",
+		"fieldZhongtw": "1",
+		"fieldWantw": "1"
+	},
+	"users": [
+		{
+			"username": "zhangsan2119",
+			"password": "pASSw0rd",
+			"fields": {
+				"fieldSQxq": "233",
+				"fieldSQgyl": "233",
+				"fieldSQqsh": "2333"
+			}
+		}
+	]
+}
