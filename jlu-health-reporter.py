@@ -2,19 +2,22 @@
 CONFIG = 'config.json'
 MAX_RETRY = 30
 RETRY_INTERVAL = 10
-DEBUG = 0+1
+DEBUG = 0#+1
 
+import os 
 import re
 import json
 from time import time, sleep
-import urllib3
-import requests
 import logging
 from logging import debug, info, warning, error, critical
+import urllib3
+import requests
 
 logging.basicConfig(level=logging.INFO-10*DEBUG, format='%(asctime)s %(levelname)s %(message)s')
 warning('Started.')
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
+info('Reading config from '+os.path.realpath(CONFIG))
 config = json.load(open(CONFIG))
 
 for user in config['users']:
