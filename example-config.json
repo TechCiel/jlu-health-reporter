@@ -5,7 +5,12 @@
 		"fieldZhongtw": "1",
 		"fieldWantw": "1"
 	},
-	"users": [
+	"conditions": {
+		"fieldZtw": "int(time()%86400/3600)==(7-8)%24",
+		"fieldZhongtw": "int(time()%86400/3600)==(11-8)%24",
+		"fieldWantw": "int(time()%86400/3600)==(17-8)%24"
+	},
+	"tasks": [
 		{
 			"username": "zhangsan2119",
 			"password": "pASSw0rd",

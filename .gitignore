@@ -1,2 +1,3 @@
-config.json
 *.log
+*.json
+!example-config.json
