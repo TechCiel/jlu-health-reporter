@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 CONFIG = 'config.json'
-MAX_RETRY = 30
+MAX_RETRY = 15
 RETRY_INTERVAL = 10
 DEBUG = 0#+1
 
