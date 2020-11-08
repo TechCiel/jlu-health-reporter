@@ -4,12 +4,6 @@
 
 以 WTFPL 授权开源。
 
-## BREAKING CHANGE 重要变更
-
-由于申报表单改为三测温一点名，为了对当前及未来情况有更广泛的适用性，本项目作出了若干不向后兼容的改变，请参照使用说明建立配置文件。
-
-适用于原先版本的打卡的配置文件模板参见 [Wiki](https://github.com/TechCiel/jlu-health-reporter/wiki/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%A8%A1%E6%9D%BF#%E6%9C%AC%E7%A7%91%E7%94%9F%E5%81%A5%E5%BA%B7%E7%8A%B6%E5%86%B5%E7%94%B3%E6%8A%A5) 。
-
 ## 免责声明
 
 本自动程序为个人使用开发，适用于吉林大学各类网上办事大厅事务表单的自动提交，未经充分测试，不保证正常工作，不建议没有调试能力的人使用。
@@ -24,12 +18,12 @@
 
 参照 `example-config.json` 建立配置文件 `config.json` ，填入登录信息和对应表单项（目前校区、公寓楼、寝室号和部分同学的班级需要程序每次指定）的值（注意均使用字符串值）。
 
-若为**研究生健康申报**使用，请修改配置文件中的 `transaction` 项的值为 `YJSMRDK`（是否适用完全未经测试）。
+若为**研究生健康申报**使用，请修改配置文件中的 `transaction` 项的值为 `YJSMRDK`（是否适用未经测试）。
 
 Crontab 模式：
 
 ```
-5 7,11,17,21 * * * /usr/bin/python3 /path/to/jlu-health-reporter.py 2>reporter.log
+5 8,21 * * * /usr/bin/python3 /path/to/jlu-health-reporter.py 2>reporter.log
 # 5分开始避免服务器时间略有偏差导致失败
 ```
 

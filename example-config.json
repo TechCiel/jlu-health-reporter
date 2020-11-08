@@ -1,14 +1,10 @@
 {
 	"transaction": "BKSMRDK",
 	"fields": {
-		"fieldZtw": "1",
-		"fieldZhongtw": "1",
-		"fieldWantw": "1"
+		"fieldZtw": "1"
 	},
 	"conditions": {
-		"fieldZtw": "int(time()%86400/3600)==(7-8)%24",
-		"fieldZhongtw": "int(time()%86400/3600)==(11-8)%24",
-		"fieldWantw": "int(time()%86400/3600)==(17-8)%24"
+		"fieldZtw": "(int(time()%86400/3600)+8)%24 in range(6,12)"
 	},
 	"tasks": [
 		{
