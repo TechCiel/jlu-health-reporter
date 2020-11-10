@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-import os, sys, re, json, time, logging as log, threading, urllib3, requests
+import os, sys, re, json, logging as log, threading, urllib3, requests
+from time import time, sleep
 DEBUG = 0#+1
 CONFIG = sys.argv[1] if len(sys.argv)>1 else 'config.json' # take cli arg or default
 CONFIG = os.path.join(os.path.dirname(os.path.abspath(__file__)), CONFIG) # relative to file
@@ -42,7 +43,7 @@ def runTask(task):
 				'formData': json.dumps(data['data']),
 				'nextUsers': '{}',
 				'stepId': sid,
-				'timestamp': int(time.time()),
+				'timestamp': int(time()),
 				'boundFields': ','.join(data['fields'].keys()),
 				'csrfToken': csrfToken
 			}
@@ -55,7 +56,7 @@ def runTask(task):
 			break
 		except Exception as e:
 			log.error(e)
-			time.sleep(TIMEOUT)
+			sleep(TIMEOUT)
 
 log.basicConfig(
 	level=log.INFO-10*DEBUG,
