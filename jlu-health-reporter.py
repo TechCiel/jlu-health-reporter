@@ -53,10 +53,11 @@ def runTask(task):
 			if json.loads(r.content)['ecode'] != 'SUCCEED' :
 				raise Exception('The server returned a non-successful status.')
 			log.info('Success!')
-			break
+			return
 		except Exception as e:
 			log.error(e)
 			sleep(TIMEOUT)
+	log.error('Failed too many times, exiting...')
 
 log.basicConfig(
 	level=log.INFO-10*DEBUG,
