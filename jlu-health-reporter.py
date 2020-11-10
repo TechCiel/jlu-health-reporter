@@ -5,8 +5,9 @@ DEBUG = 0#+1
 CONFIG = sys.argv[1] if len(sys.argv)>1 else 'config.json' # take cli arg or default
 CONFIG = os.path.join(os.path.dirname(os.path.abspath(__file__)), CONFIG) # relative to file
 # CONFIG = '/etc/jlu.conf' # force a config file here
-RETRIES = 50
-TIMEOUT = 5
+RETRIES = 100
+TIMEOUT = 2
+INTERVAL = 0.5
 
 def runTask(task):
 	for _ in range(RETRIES):
@@ -79,3 +80,4 @@ for task in config.get('tasks', [{}]):
 			name=f"{task['transaction']}:{task['username']}",
 			args=(task,)
 		).start()
+	sleep(INTERVAL)
