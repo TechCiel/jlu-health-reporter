@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
-import os, sys, re, json, logging as log, threading, urllib3, requests
+import os, sys, re, json, random, logging as log, threading, urllib3, requests
 from time import time, sleep
 DEBUG = 0#+1
 CONFIG = sys.argv[1] if len(sys.argv)>1 else 'config.json' # take cli arg or default
 CONFIG = os.path.join(os.path.dirname(os.path.abspath(__file__)), CONFIG) # relative to file
-# CONFIG = '/etc/jlu.conf' # force a config file here
-RETRIES = 100
-TIMEOUT = 2
-INTERVAL = 0.5
+# times to retry a failed task
+RETRIES = 500
+# network timeout & retry interval
+TIMEOUT = 10
+# time between worker thread start
+INTERVAL = 2
+# random delay to lower the load of ehall
+RAND_DELAY = 10*60
 
 def runTask(task):
 	for _ in range(RETRIES):
@@ -64,8 +68,13 @@ log.basicConfig(
 	level=log.INFO-10*DEBUG,
 	format='%(asctime)s %(threadName)s:%(levelname)s %(message)s'
 )
-log.warning('Started.')
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+log.warning('Started.')
+try:
+	log.info('Press Control-C to skip random delay...')
+	sleep(random.random()*RAND_DELAY)
+except KeyboardInterrupt:
+	pass
 
 log.info(f'Reading config from {CONFIG}')
 config = json.load(open(CONFIG))
