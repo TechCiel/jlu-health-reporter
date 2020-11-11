@@ -78,7 +78,7 @@ except KeyboardInterrupt:
 
 log.info(f'Reading config from {CONFIG}')
 config = json.load(open(CONFIG))
-for task in config.get('tasks', [{}]):
+for task in config.get('tasks', config.get('users', [{}])):
 	for k in ['username', 'password', 'transaction']:
 		task.setdefault(k, config.get(k))
 	for k in ['fields', 'conditions']:
