@@ -25,13 +25,13 @@
 Crontab 模式：
 
 ```
-0 8,21 * * * /usr/bin/python3 /path/to/jlu-health-reporter.py 2>reporter.log
+5 8,21 * * * /usr/bin/python3 /path/to/server.py >reporter.log 2>/dev/null
 ```
 
 手动模式（请在时段内启动）：
 
 ```
-./jlu-health-reporter.py
+python3 /path/to/local.py
 ```
 
 更多用法请见 [Wiki](https://github.com/TechCiel/jlu-health-reporter/wiki)

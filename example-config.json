@@ -4,7 +4,7 @@
 		"fieldZtw": "1"
 	},
 	"conditions": {
-		"fieldZtw": "(int(time()%86400/3600)+8)%24 in range(6,12)"
+		"fieldZtw": "int(ctime().split()[-2].split(':')[0]) in range(6,12)"
 	},
 	"tasks": [
 		{
