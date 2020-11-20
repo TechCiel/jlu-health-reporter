@@ -11,7 +11,7 @@ TIMEOUT = 10
 # retry interval
 INTERVAL = 30
 # random delay to lower the load of ehall
-RAND_DELAY = 10 * 60
+RAND_DELAY = 30 * 60
 
 def runTask(task):
     sleep(random.random()*RAND_DELAY) # sleep random minutes in each thread
