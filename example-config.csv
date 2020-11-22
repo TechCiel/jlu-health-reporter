@@ -1,0 +1,5 @@
+username,password,fieldSQnj,fieldSQnj_Name,fieldSQbj,fieldSQbj_Name,fieldSQxq,fieldSQxq_Name,fieldSQgyl,fieldSQgyl_Name,fieldSQqsh,extra
+,this_is_comment,,,,,,,,,,
+zhangsan2119,pASSw0rd,2119,2019,233,211999,1,中心校区,1,北苑1公寓,2333,
+,校外居住,,,,,,,,,,
+zhangsan2119,pASSw0rd,2119,2019,233,211999,1,中心校区,82,校外居住,,"task['fields'].update({'fieldSheng':'220000','fieldShi':'220100','fieldQu':'220104','fieldQums':'地址'})"

@@ -11,8 +11,14 @@
 			"username": "zhangsan2119",
 			"password": "pASSw0rd",
 			"fields": {
-				"fieldSQxq": "233",
-				"fieldSQgyl": "233",
+				"fieldSQnj": "2119",
+				"fieldSQnj_Name": "2019",
+				"fieldSQbj": "233",
+				"fieldSQbj_Name": "211999",
+				"fieldSQxq": "1",
+				"fieldSQxq_Name": "\u4e2d\u5fc3\u6821\u533a",
+				"fieldSQgyl": "1",
+				"fieldSQgyl_Name": "\u5317\u82d11\u516c\u5bd3",
 				"fieldSQqsh": "2333"
 			}
 		}
