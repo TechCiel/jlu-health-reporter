@@ -5,6 +5,7 @@
 		"fieldZtw": "1"
 	},
 	"conditions": {
+		"fieldDJXXyc": "(int(time()%86400/3600)+8)%24 in range(6,12)",
 		"fieldZtw": "(int(time()%86400/3600)+8)%24 in range(6,12)"
 	},
 	"tasks": [
