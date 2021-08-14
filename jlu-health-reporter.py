@@ -4,14 +4,15 @@ from time import time, sleep
 DEBUG = 0#+1
 CONFIG = sys.argv[1] if len(sys.argv)>1 else 'config.json' # take cli arg or default
 CONFIG = os.path.join(os.path.dirname(os.path.abspath(__file__)), CONFIG) # relative to file
-# times to retry a failed task
-RETRIES = 500
-# network timeout & retry interval
-TIMEOUT = 10
-# time between worker thread start
-INTERVAL = 2
 # random delay to lower the load of ehall
 RAND_DELAY = 30*60
+# time between worker thread start
+TASK_INTERVAL = 2
+# times to retry a failed task
+RETRIES = 500
+RETRY_INTERVAL = 60
+# network timeout
+TIMEOUT = 10
 
 def runTask(task):
 	for _ in range(RETRIES):
@@ -21,11 +22,11 @@ def runTask(task):
 			s.verify = False
 			
 			log.info('Authenticating...')
-			r = s.get('https://ehall.jlu.edu.cn/jlu_portal/login', timeout=TIMEOUT)
+			r = s.get('https://ehall.jlu.edu.cn/sso/login', timeout=TIMEOUT)
 			pid = re.search('(?<=name="pid" value=")[a-z0-9]{8}', r.text)[0]
 			log.debug(f"PID: {pid}")
 			postPayload = {'username': task['username'], 'password': task['password'], 'pid': pid}
-			r = s.post('https://ehall.jlu.edu.cn/sso/login', data=postPayload, timeout=TIMEOUT)
+			r = s.post('https://ehall.jlu.edu.cn/sso/login', data=postPayload, allow_redirects=False, timeout=TIMEOUT)
 
 			log.info('Requesting form...')
 			r = s.get(f"https://ehall.jlu.edu.cn/infoplus/form/{task['transaction']}/start", timeout=TIMEOUT)
@@ -61,7 +62,7 @@ def runTask(task):
 			return
 		except Exception as e:
 			log.error(e)
-			sleep(TIMEOUT)
+			sleep(RETRY_INTERVAL)
 	log.error('Failed too many times, exiting...')
 
 log.basicConfig(
@@ -89,4 +90,4 @@ for task in config.get('tasks', config.get('users', [{}])):
 			name=f"{task['transaction']}:{task['username']}",
 			args=(task,)
 		).start()
-	sleep(INTERVAL)
+	sleep(TASK_INTERVAL)
