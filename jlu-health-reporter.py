@@ -9,13 +9,14 @@ RAND_DELAY = 30*60
 # time between worker thread start
 TASK_INTERVAL = 2
 # times to retry a failed task
-RETRIES = 500
+RETRY_UNTIL = 5*60*60
 RETRY_INTERVAL = 60
 # network timeout
 TIMEOUT = 10
 
 def runTask(task):
-	for _ in range(RETRIES):
+	started = time()
+	while started+RETRY_UNTIL > time():
 		try:
 			s = requests.Session()
 			s.headers.update({'Referer': 'https://ehall.jlu.edu.cn/'})
@@ -63,7 +64,7 @@ def runTask(task):
 		except Exception as e:
 			log.error(e)
 			sleep(RETRY_INTERVAL)
-	log.error('Failed too many times, exiting...')
+	log.error('Stop retrying, task failed!')
 
 log.basicConfig(
 	level=log.INFO-10*DEBUG,
