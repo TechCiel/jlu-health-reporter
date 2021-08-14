@@ -22,6 +22,8 @@
 
 若为**研究生健康申报**使用，请修改配置文件中的 `transaction` 项的值为 `YJSMRDK`（是否适用未经测试）。
 
+若出现证书错误，请将 `ehall.jlu.edu.cn` 的完整证书链更新到 `ca.crt` 中，或设置 `s.verify = False` 。
+
 Crontab 模式：
 
 ```
