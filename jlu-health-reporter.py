@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-import os, sys, re, json, random, logging as log, threading, urllib3, requests
+import os, sys, re, json, random, logging as log, threading, requests
 from time import time, sleep
 DEBUG = 0#+1
 CONFIG = sys.argv[1] if len(sys.argv)>1 else 'config.json' # take cli arg or default
-CONFIG = os.path.join(os.path.dirname(os.path.abspath(__file__)), CONFIG) # relative to file
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 # random delay to lower the load of ehall
 RAND_DELAY = 30*60
 # time between worker thread start
@@ -19,7 +19,7 @@ def runTask(task):
 		try:
 			s = requests.Session()
 			s.headers.update({'Referer': 'https://ehall.jlu.edu.cn/'})
-			s.verify = False
+			s.verify = 'ca.crt' # False
 			
 			log.info('Authenticating...')
 			r = s.get('https://ehall.jlu.edu.cn/sso/login', timeout=TIMEOUT)
@@ -69,7 +69,6 @@ log.basicConfig(
 	level=log.INFO-10*DEBUG,
 	format='%(asctime)s %(threadName)s:%(levelname)s %(message)s'
 )
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 log.warning('Started.')
 try:
 	log.info('Press Control-C to skip random delay...')
